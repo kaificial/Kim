@@ -56,18 +56,6 @@ const projects: Project[] = [
     githubUrl: 'https://github.com/kaificial/portfolio',
     featured: false
   },
-  {
-    id: 'keyra',
-    title: 'TypeXi',
-    description: 'An improved version of my first ever coding project',
-    longDescription: 'Typing game for users to improve their typing speed and accuracy. Features multiple programming language modes including Java, JavaScript and Python. Includes syntax highlighting, error detection, and performance analytics',
-          image: '/pictures/typexi.png',
-    technologies: ['Python', 'Flask', 'HTML', 'CSS', 'JavaScript'],
-    status: 'live',
-    demoUrl: 'https://typexi.vercel.app/',
-    githubUrl: 'https://github.com/kaificial/TypingGame2',
-    featured: false
-  }
 ];
 
 const Projects: NextPage = () => {
