@@ -11,6 +11,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "next": {
+    "telemetry": false
+  },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
     "@types/node": "^20.11.24",
