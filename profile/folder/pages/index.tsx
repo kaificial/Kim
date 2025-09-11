@@ -1079,7 +1079,7 @@ const Home: NextPage = () => {
                         Rooke
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                        Rooke is a improvement of a High School project, it is a web-based chess app that. The platform allows users to play chess against AI opponents with different difficulty levels and sandbox with friends. Online soon :)
+                        Rooke is an improvement of a High School project, it is a web-based chess app. The platform allows users to play chess against AI opponents with different difficulty levels and sandbox with friends. Online soon :)
                       </p>
                     </div>
                   </div>

@@ -47,7 +47,7 @@ const projects: Project[] = [
   {
     id: 'rooke',
     title: 'Rooke',
-    description: 'Rooke is a improvement of a High School project, it is a web-based chess app that. The platform allows users to play chess against AI opponents with different difficulty levels and sandbox with friends. Online soon :)',
+    description: 'Rooke is an improvement of a High School project, it is a web-based chess app. The platform allows users to play chess against AI opponents with different difficulty levels and sandbox with friends. Online soon :)',
     longDescription: 'A web-based chess application built with modern technologies. Features include playing against AI opponents with different difficulty levels, sandbox mode with friends, and custom chess implementation with bitboard representation for optimal performance.',
     image: '/pictures/image (15).png',
     technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Stockfish', 'Zustand'],
