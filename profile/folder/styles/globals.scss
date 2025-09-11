@@ -1,0 +1,407 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "IBM Plex Mono", "Courier New", "Courier", monospace;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre {
+  font-family: "IBM Plex Mono", "Courier New", "Courier", monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer base {
+  html {
+    /* Remove transitions for instant theme switching */
+  }
+  
+  body {
+    @apply dark:bg-black bg-white;
+    /* Minimal square grid background pattern */
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 0 0;
+  }
+  
+  .dark body {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 0 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  *:focus {
+    outline: 2px solid #6b7280;
+    outline-offset: 2px;
+  }
+  
+  .dark *:focus {
+    outline-color: #9ca3af;
+  }
+  
+  nav a:focus,
+  .nav-link:focus,
+  button:focus,
+  [role="button"]:focus {
+    outline: none !important;
+  }
+}
+
+#blogs {
+  li {
+    transition-delay: 600ms;
+  }
+  
+  ul {
+    transition-delay: 800ms;
+  }
+}
+
+@layer components {
+  .blogitem {
+    @apply group-hover:text-gray-500;
+  }
+
+  .hover-bg-animation {
+    @apply relative overflow-hidden transition-all duration-300 ease-in-out;
+    transform: translateZ(0);
+  }
+
+  .hover-bg-animation::before {
+    content: '';
+    @apply absolute inset-0 bg-gray-100 dark:bg-gray-800/30 opacity-0 transition-opacity duration-300 ease-in-out;
+    z-index: -1;
+  }
+
+  .hover-bg-animation:hover::before {
+    @apply opacity-100;
+  }
+  
+  
+  .card-elevated {
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-elevated:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 14px 28px rgba(0, 0, 0, 0.25),
+      0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+  
+  .project-card {
+    background-color: white !important;
+    background-image: none !important;
+  }
+  
+  .dark .project-card {
+    background-color: black !important;
+    background-image: none !important;
+  }
+  
+  .education-card {
+    background-color: white !important;
+    background-image: none !important;
+  }
+  
+  .dark .education-card {
+    background-color: black !important;
+    background-image: none !important;
+  }
+  
+  .skill-tag {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .skill-tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .skill-tag:hover::before {
+    left: 100%;
+  }
+  
+  .skill-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.2);
+  }
+
+  .hover-bg-slide-left::before {
+    @apply w-0 h-full left-0;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .hover-bg-slide-left:hover::before {
+    @apply w-full;
+  }
+
+  .hover-bg-slide-right::before {
+    @apply w-0 h-full right-0;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .hover-bg-slide-right:hover::before {
+    @apply w-full;
+  }
+
+  .hover-bg-slide-top::before {
+    @apply w-full h-0 top-0;
+    transition: height 0.3s ease-in-out;
+  }
+
+  .hover-bg-slide-top:hover::before {
+    @apply h-full;
+  }
+
+  .hover-bg-slide-bottom::before {
+    @apply w-full h-0 bottom-0;
+    transition: height 0.3s ease-in-out;
+  }
+
+  .hover-bg-slide-bottom:hover::before {
+    @apply h-full;
+  }
+
+  .hover-card {
+    @apply relative overflow-hidden rounded-lg transition-all duration-300 ease-in-out;
+  }
+
+  .hover-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/20 dark:to-gray-700/30 opacity-0 transition-all duration-300 ease-in-out;
+    z-index: -1;
+  }
+
+  .hover-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .hover-card:hover {
+    @apply transform scale-[1.02] shadow-lg;
+  }
+}
+
+@layer utilities {
+  .theme-transition {
+    transition: color 0.15s ease-out, 
+                background-color 0.15s ease-out, 
+                border-color 0.15s ease-out, 
+                box-shadow 0.15s ease-out;
+  }
+  
+  .instant-theme {
+    transition: none !important;
+  }
+  
+  .instant-theme * {
+    transition: none !important;
+  }
+  
+  /* Theme switching optimization */
+  .theme-switching {
+    transition: none !important;
+  }
+  
+  .theme-switching * {
+    transition: none !important;
+  }
+  
+  /* Preserve only transform and opacity transitions during theme changes */
+  .theme-switching *:not([class*="animate-"]):not([class*="hover:"]) {
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out !important;
+  }
+  
+  .no-color-flash {
+    transition: none !important;
+  }
+  
+  .no-color-flash * {
+    transition: none !important;
+  }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  .mobile-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-animation {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+  
+  .mobile-focus:focus {
+    outline: 2px solid #f59e0b;
+    outline-offset: 2px;
+  }
+  
+  .dark .mobile-focus:focus {
+    outline-color: #06b6d4;
+  }
+  
+  /* Grid background variations */
+  .grid-bg-subtle {
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .dark .grid-bg-subtle {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .grid-bg-dense {
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  
+  .dark .grid-bg-dense {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+}
+
+::selection {
+  @apply dark:bg-gray-700 bg-gray-200;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+/* Optimized color transitions - only for interactive elements */
+button, a, input, textarea, select {
+  transition: color 0.1s ease-out, background-color 0.1s ease-out, border-color 0.1s ease-out, transform 0.2s ease-out;
+}
+
+/* Prevent any red color flashes */
+* {
+  color: inherit;
+}
+
+body {
+  color: inherit;
+}
+
+blockquote {
+  @apply border-l-4 dark:border-white border-black;
+}
+
+blockquote {
+  margin-left: 0em;
+  padding-left: 1em;
+}
+
+article {
+  p,
+  ul,
+  text,
+  tr,
+  td,
+  li,
+  ol,
+  ul {
+    font-weight: revert;
+    margin: revert;
+    padding: revert;
+    list-style: hiragana;
+    transition-delay: 0ms;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  thead {
+    font-weight: revert;
+    margin: 2rem 0 0;
+    padding: 2rem auto 1rem;
+  }
+  & > h1 {
+    margin-top: 2em;
+    font-size: 2em;
+  }
+
+}
+
+@media (max-width: 640px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* Smooth scrolling for mobile */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+}
