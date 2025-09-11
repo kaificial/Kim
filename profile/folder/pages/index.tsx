@@ -33,27 +33,20 @@ const Home: NextPage = () => {
   useEffect(() => {
     setFading(" opacity-100 ease-in ");
     
-    // Waterfall effect timing - top to bottom flow
-    const timer1 = setTimeout(() => setNameVisible(true), 300);
-    const timer2 = setTimeout(() => setSubtitleVisible(true), 1000);
-    const timer3 = setTimeout(() => setDesc1Visible(true), 1200);
-    const timer4 = setTimeout(() => setDesc2Visible(true), 1400);
-    const timer5 = setTimeout(() => setImageVisible(true), 1600);
-    const timer6 = setTimeout(() => setExperienceVisible(true), 2000);
-    const timer7 = setTimeout(() => setEducationVisible(true), 2400);
-    const timer8 = setTimeout(() => setSkillsVisible(true), 2800);
-    const timer9 = setTimeout(() => setProjectsVisible(true), 3200);
+    const timers = [
+      setTimeout(() => setNameVisible(true), 200),
+      setTimeout(() => setSubtitleVisible(true), 600),
+      setTimeout(() => setDesc1Visible(true), 800),
+      setTimeout(() => setDesc2Visible(true), 1000),
+      setTimeout(() => setImageVisible(true), 1200),
+      setTimeout(() => setExperienceVisible(true), 1400),
+      setTimeout(() => setEducationVisible(true), 1600),
+      setTimeout(() => setSkillsVisible(true), 1800),
+      setTimeout(() => setProjectsVisible(true), 2000),
+    ];
     
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
-      clearTimeout(timer5);
-      clearTimeout(timer6);
-      clearTimeout(timer7);
-      clearTimeout(timer8);
-      clearTimeout(timer9);
+      timers.forEach(timer => clearTimeout(timer));
     };
   }, []);
 
@@ -68,7 +61,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="px-4 sm:px-8 relative overflow-hidden">
+    <div className="px-4 sm:px-8 relative overflow-hidden animate-in fade-in duration-1000">
       <ScrollProgress />
       <div className="fixed inset-0 pointer-events-none z-0">
         {particles.map((particle) => (
@@ -81,6 +74,7 @@ const Home: NextPage = () => {
               width: `${particle.size}px`,
               height: `${particle.size}px`,
               animationDuration: `${particle.speed}s`,
+              animationDelay: `${particle.id * 0.1}s`,
             }}
           />
         ))}
@@ -102,21 +96,21 @@ const Home: NextPage = () => {
 
       <div className="flex flex-col justify-center items-start max-w-2xl border-gray-200 dark:border-gray-700 mx-auto pb-16 relative z-10">
         
-        <div className={"w-full max-w-2xl transition-opacity duration-600 delay-300 " + fading}>
+        <div className={"w-full max-w-2xl transition-all duration-1000 ease-out delay-200 " + fading}>
           <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
             <div className="flex flex-col sm:pr-8 w-full sm:w-auto sm:flex-1">
                               <h1
                   className={
-                    "font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-3 text-black dark:text-white transition-opacity duration-1000 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text " +
-                    (nameVisible ? " opacity-100 " : " opacity-0 ")
+                    "font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-3 text-black dark:text-white bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text transition-all duration-1000 ease-out " +
+                    (nameVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-4 ")
                   }
                 >
                   Kai Kim
                 </h1>
               <h2
                 className={
-                  "text-gray-700 dark:text-gray-200 mb-6 transition-opacity duration-800 text-lg sm:text-xl font-medium flex flex-wrap items-center gap-3 " +
-                  (subtitleVisible ? " opacity-100 " : " opacity-0 ")
+                  "text-gray-700 dark:text-gray-200 mb-6 text-lg sm:text-xl font-medium flex flex-wrap items-center gap-3 transition-all duration-1000 ease-out " +
+                  (subtitleVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-4 ")
                 }
               >
                 <span>{subheading}</span>
@@ -130,15 +124,15 @@ const Home: NextPage = () => {
               </h2>
               <p
                 className={
-                  "text-gray-600 dark:text-gray-400 mb-6 break-normal transition-opacity duration-800 " +
-                  (desc1Visible ? " opacity-100 " : " opacity-0 ")
+                  "text-gray-600 dark:text-gray-400 mb-6 break-normal transition-all duration-1000 ease-out " +
+                  (desc1Visible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-4 ")
                 }
               >
                 Hello! I&apos;m a developer focused on creating engaging user experiences and building user-friendly interfaces.
               </p>
               
               {/* Social Media Links */}
-              <div className={"transition-opacity duration-800 " + (desc2Visible ? " opacity-100 " : " opacity-0 ")}>
+              <div className={"transition-all duration-1000 ease-out " + (desc2Visible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-4 ")}>
                 <div className="relative">
                   <div className="relative inline-flex items-center space-x-4">
                       {/* GitHub */}
@@ -209,24 +203,34 @@ const Home: NextPage = () => {
               </div>
               
             </div>
-                          <div className={"duration-800 " + (imageVisible ? " opacity-100 " : " opacity-0 ") + "w-full sm:w-auto sm:flex-shrink-0 flex justify-center sm:justify-start"}>
+                          <div className={"w-full sm:w-auto sm:flex-shrink-0 flex justify-center sm:justify-start transition-all duration-1000 ease-out " + (imageVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-8 ")}>
                 <div className="relative group p-1">
                   <div className="absolute inset-0 bg-blue-500/10 dark:bg-blue-400/10 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-700 group-hover:duration-300"></div>
-                  <Image
-                    alt="Kai Kim"
-                    height={200}
-                    width={260}
-                    src="/pictures/kai-profile.jpg"
-                    priority
-                    className="relative rounded-2xl w-full max-w-[200px] sm:max-w-[220px] lg:max-w-[260px] shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02]"
-                  />
+                  <div className="relative overflow-hidden rounded-2xl">
+                    <Image
+                      alt="Kai Kim"
+                      height={200}
+                      width={260}
+                      src="/pictures/kai-profile.jpg"
+                      priority
+                      className="relative w-full max-w-[200px] sm:max-w-[220px] lg:max-w-[260px] shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02] transform-gpu"
+                      style={{
+                        transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+                        transform: imageVisible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+                      }}
+                    />
+                    {/* Loading shimmer effect */}
+                    {!imageVisible && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-pulse rounded-2xl"></div>
+                    )}
+                  </div>
                 </div>
               </div>
           </div>
         </div>
 
         {/* Experience Section */}
-        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
+        <div className={"w-full max-w-2xl mt-12 transition-all duration-1000 ease-out " + (experienceVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-6 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Experience
@@ -467,7 +471,7 @@ const Home: NextPage = () => {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
                     <div className="flex flex-col">
                       <h3 className="text-gray-900 dark:text-white font-semibold text-base">
-                        QASA (Queen's Asian Student Association)
+                        QASA (Queen&apos;s Asian Student Association)
                       </h3>
                       <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
                         Graphics Coordinator
@@ -531,7 +535,7 @@ const Home: NextPage = () => {
         </div>
 
         {/* Education Section */}
-        <div className={"w-full max-w-2xl mt-16 transition-opacity duration-800 " + (educationVisible ? " opacity-100 " : " opacity-0 ")}>
+        <div className={"w-full max-w-2xl mt-16 transition-all duration-1000 ease-out " + (educationVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-6 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Education
@@ -567,7 +571,7 @@ const Home: NextPage = () => {
         </div>
 
         {/* Skills Section */}
-        <div className={"w-full max-w-2xl mt-16 transition-opacity duration-800 " + (skillsVisible ? " opacity-100 " : " opacity-0 ")}>
+        <div className={"w-full max-w-2xl mt-16 transition-all duration-1000 ease-out " + (skillsVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-6 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Skills
@@ -647,7 +651,7 @@ const Home: NextPage = () => {
         </div>
 
         {/* Featured Projects Section */}
-        <div className={"w-full max-w-2xl mt-20 transition-opacity duration-800 " + (projectsVisible ? " opacity-100 " : " opacity-0 ")}>
+        <div className={"w-full max-w-2xl mt-20 transition-all duration-1000 ease-out " + (projectsVisible ? " opacity-100 translate-y-0 " : " opacity-0 translate-y-6 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Featured Projects
