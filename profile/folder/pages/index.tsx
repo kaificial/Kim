@@ -10,7 +10,7 @@ import FloatingSocialPills from "../components/floatingSocialPills";
 const Home: NextPage = () => {
 
   const heading = "Kai Kim";
-  const subheading = "CS @ Queen's";
+  const subheading = "CS @ Queen&apos;s";
   const [showIgnitionBlurb, setShowIgnitionBlurb] = useState(false);
   const [showHawkHacksBlurb, setShowHawkHacksBlurb] = useState(false);
   const [showQASABlurb, setShowQASABlurb] = useState(false);
@@ -463,7 +463,7 @@ const Home: NextPage = () => {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
                     <div className="flex flex-col">
                       <h3 className="text-gray-900 dark:text-white font-semibold text-base">
-                        QASA - Queen's Asian Student Association
+                        QASA - Queen&apos;s Asian Student Association
                       </h3>
                       <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
                         Graphics Coordinator
@@ -533,7 +533,7 @@ const Home: NextPage = () => {
                 <div className="w-12 h-12 mr-4 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
                     src="/pictures/queens-creast.png"
-                    alt="Queen's University Coat of Arms"
+                    alt="Queen&apos;s University Coat of Arms"
                     width={48}
                     height={48}
                     className="w-full h-full object-contain"
