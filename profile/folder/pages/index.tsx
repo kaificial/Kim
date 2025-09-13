@@ -309,7 +309,7 @@ const Home: NextPage = () => {
             <div className={`${showReEnvisionBlurb ? 'h-4' : 'h-0'} transition-all duration-300`}></div>
             
             {/* HawkHacks Experience */}
-            <div className="transition-all duration-700 ease-out transform">
+            <div className="transition-all duration-700 ease-out transform hidden">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
@@ -380,7 +380,7 @@ const Home: NextPage = () => {
             <div className={`${showHawkHacksBlurb ? 'h-4' : 'h-0'} transition-all duration-300`}></div>
             
             {/* Ignition Hacks Experience */}
-            <div className="transition-all duration-700 ease-out transform">
+            <div className="transition-all duration-700 ease-out transform hidden">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
@@ -448,7 +448,7 @@ const Home: NextPage = () => {
             </div>
             
             {/* QASA Experience */}
-            <div className="transition-all duration-700 ease-out transform">
+            <div className="transition-all duration-700 ease-out transform hidden">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
