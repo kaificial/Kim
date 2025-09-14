@@ -1110,7 +1110,7 @@ const Home: NextPage = () => {
                     
                     <div className="flex space-x-3">
                       <a 
-                        href="#"
+                        href="https://rooke.vercel.app"
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-3 py-1.5 bg-blue-600 dark:bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 dark:hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
@@ -1121,7 +1121,7 @@ const Home: NextPage = () => {
                         </svg>
                       </a>
                       <a 
-                        href="#"
+                        href="https://github.com/kaificial/Rooke"
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
