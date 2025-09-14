@@ -45,6 +45,18 @@ const projects: Project[] = [
     featured: true
   },
   {
+    id: 'rooke',
+    title: 'Rooke',
+    description: 'A web-based chess app with AI opponents and sandbox mode. Remake of a high school project with modern technologies.',
+    longDescription: 'A web-based chess app with AI opponents and sandbox mode. Remake of a high school project with modern technologies.',
+    image: '/pictures/Rooke.png',
+    technologies: ['React 18', 'TypeScript', 'Vite', 'Tailwind CSS', 'Stockfish', 'Zustand'],
+    status: 'live',
+    demoUrl: 'https://rooke.vercel.app',
+    githubUrl: 'https://github.com/kaificial/Rooke',
+    featured: true
+  },
+  {
     id: 'portfolio',
     title: 'Personal Portfolio',
     description: 'A modern, responsive portfolio website showcasing my projects, skills, and experience.',
