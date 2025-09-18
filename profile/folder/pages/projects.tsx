@@ -28,7 +28,7 @@ const projects: Project[] = [
     image: '/pictures/image (14).png',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Chart.js'],
     status: 'development',
-    demoUrl: 'https://studentfinance-demo.vercel.app',
+    demoUrl: 'https://kodafinances.vercel.app',
     githubUrl: 'https://github.com/kaificial/studentfinance',
     featured: true
   },
