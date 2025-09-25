@@ -20,14 +20,14 @@ const FloatingSocialPills = () => {
     }`}>
       <div className="relative">
         {/* Animated background glow */}
-        <div className={`absolute inset-0 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 dark:from-blue-500/20 dark:to-indigo-500/20 rounded-full blur-lg transition-all duration-500 ${
+        <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/30 to-indigo-500/30 dark:from-blue-500/20 dark:to-indigo-500/20 rounded-xl blur-lg transition-all duration-500 ${
           isHovered ? 'scale-110 opacity-100' : 'scale-100 opacity-0'
         }`}></div>
         
-        {/* Main pill container with enhanced styling */}
+        {/* Main rectangular container with enhanced styling */}
         <div 
-          className={`bg-gradient-to-r from-blue-50/95 to-indigo-50/95 dark:from-gray-800/95 dark:to-gray-700/95 backdrop-blur-xl rounded-full py-2.5 px-4 md:px-5 border border-blue-200/60 dark:border-gray-600/60 shadow-2xl transition-all duration-300 touch-manipulation cursor-pointer ${
-            isHovered ? 'shadow-blue-500/25 dark:shadow-blue-400/25 scale-105' : 'shadow-gray-500/10 dark:shadow-gray-400/10'
+          className={`bg-gradient-to-r from-blue-100/95 to-indigo-100/95 dark:from-gray-800/95 dark:to-gray-700/95 backdrop-blur-xl rounded-xl py-2.5 px-4 md:px-5 border border-blue-300/80 dark:border-gray-600/60 shadow-2xl transition-all duration-300 touch-manipulation cursor-pointer ${
+            isHovered ? 'shadow-blue-500/40 dark:shadow-blue-400/25 scale-105' : 'shadow-blue-500/20 dark:shadow-gray-400/10'
           }`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

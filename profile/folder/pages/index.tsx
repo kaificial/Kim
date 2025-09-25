@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   const [showIgnitionBlurb, setShowIgnitionBlurb] = useState(false);
   const [showHawkHacksBlurb, setShowHawkHacksBlurb] = useState(false);
   const [showQASABlurb, setShowQASABlurb] = useState(false);
-  const [showReEnvisionBlurb, setShowReEnvisionBlurb] = useState(false);
+  const [showQBiTBlurb, setShowQBiTBlurb] = useState(false);
   const [fading, setFading] = useState(" opacity-0 ease-in ");
   
   // Individual visibility states for waterfall effect
@@ -226,45 +226,47 @@ const Home: NextPage = () => {
         </div>
 
         {/* Experience Section */}
-        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 hidden " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
+        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Experience
             </h2>
           </div>
           <div className="flex flex-col gap-y-4">
-            {/* ReEnvision Experience */}
+            {/* QBiT Experience */}
             <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
-                  <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center">
-                    <svg className="w-6 h-6 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
+                <div className="w-14 h-14 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <Image
+                    src="/pictures/QBiT-Logo.png"
+                    alt="QBiT Logo"
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
                     <div className="flex flex-col">
                       <h3 className="text-gray-900 dark:text-white font-semibold text-base">
-                        ReEnvision
+                        QBiT (Queen&apos;s Biomedical Innovation Team)
                       </h3>
                       <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-                        Web Developer
+                        Software Team Member
                       </span>
                     </div>
                     <span className="text-gray-500 dark:text-gray-400 text-sm">
-                      Aug 2025 - Present
+                      Sept. 2025 - Present
                     </span>
                   </div>
                   <div className="mt-2">
                     <button
-                      onClick={() => setShowReEnvisionBlurb(!showReEnvisionBlurb)}
+                      onClick={() => setShowQBiTBlurb(!showQBiTBlurb)}
                       className="text-xs px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1 group"
                     >
-                      <span>{showReEnvisionBlurb ? 'Show less' : 'Read more'}</span>
+                      <span>{showQBiTBlurb ? 'Show less' : 'Read more'}</span>
                       <svg 
-                        className={`w-3 h-3 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showReEnvisionBlurb ? 'rotate-180' : 'rotate-0'}`} 
+                        className={`w-3 h-3 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showQBiTBlurb ? 'rotate-180' : 'rotate-0'}`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -276,27 +278,15 @@ const Home: NextPage = () => {
                   
                   {/* Expandable Blurb */}
                   <div className={`transition-all duration-300 ease-in-out ${
-                    showReEnvisionBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+                    showQBiTBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <div className="mt-3">
                       <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                        Developing the ReEnvision website
+                        Software Engineer
                       </p>
                       <div className="flex flex-wrap gap-2">
                         <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
-                          TypeScript
-                        </span>
-                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
-                          Next.js
-                        </span>
-                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
-                          Web Development
-                        </span>
-                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
-                          Frontend
-                        </span>
-                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
-                          UI/UX
+                          Python
                         </span>
                       </div>
                     </div>
@@ -305,8 +295,8 @@ const Home: NextPage = () => {
               </div>
             </div>
             
-            {/* Conditional spacing when ReEnvision experience is expanded */}
-            <div className={`${showReEnvisionBlurb ? 'h-4' : 'h-0'} transition-all duration-300`}></div>
+            {/* Conditional spacing when QBiT experience is expanded */}
+            <div className={`${showQBiTBlurb ? 'h-4' : 'h-0'} transition-all duration-300`}></div>
             
             {/* HawkHacks Experience */}
             <div className="transition-all duration-700 ease-out transform hidden">
@@ -549,7 +539,7 @@ const Home: NextPage = () => {
                 </div>
                 <span className="grow opacity-0 md:opacity-100 w-full border-t dark:border-gray-500 mx-4 border-dashed border-gray-400"></span>
                 <span className="dark:text-gray-400 sm:whitespace-nowrap whitespace-normal text-right text-gray-600 text-sm flex-shrink-0">
-                  2024 - 2028
+                  2029
                 </span>
               </ul>
             </div>
