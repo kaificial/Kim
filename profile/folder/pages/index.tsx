@@ -226,7 +226,7 @@ const Home: NextPage = () => {
         </div>
 
         {/* Experience Section */}
-        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
+        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 hidden " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Experience
