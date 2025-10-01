@@ -45,19 +45,19 @@ const MobileNav = () => {
   }, []);
 
   useEffect(() => {
-    // Close mobile menu when route changes
+    // Close the menu when user navigates to a new page
     setIsOpen(false);
   }, [router.asPath]);
 
   useEffect(() => {
-    // Prevent body scroll when mobile menu is open
+    // Don't let the page scroll when the menu is open
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
 
-    // Cleanup on unmount
+    // Make sure to restore scrolling when component is removed
     return () => {
       document.body.style.overflow = 'unset';
     };

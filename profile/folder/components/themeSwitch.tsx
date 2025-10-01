@@ -11,7 +11,7 @@ const ThemeSwitch = () => {
   useEffect(() => {
     setMounted(true);
     
-    // Cleanup function to remove theme-switching class
+    // Clean up when component unmounts
     return () => {
       document.body.classList.remove('theme-switching');
     };
@@ -21,13 +21,13 @@ const ThemeSwitch = () => {
     setIsRotating(true);
     setIsThemeSwitching(true);
     
-    // Add theme-switching class to body for instant transitions
+    // Make the theme change feel instant
     document.body.classList.add('theme-switching');
     
-    // Instant theme change
+    // Actually switch the theme
     setTheme(theme === "dark" ? "light" : "dark");
     
-    // Remove theme-switching class and stop rotation after theme change
+    // Clean up and stop the spinning animation
     setTimeout(() => {
       document.body.classList.remove('theme-switching');
       setIsThemeSwitching(false);

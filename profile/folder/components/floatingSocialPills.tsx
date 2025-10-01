@@ -6,10 +6,10 @@ const FloatingSocialPills = () => {
   const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
   useEffect(() => {
-    // Show the floating pills after a delay to match the original animation timing
+    // Wait for the main page to load before showing these social links
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1800); // Same timing as navPillsVisible in index.tsx
+    }, 1800); // Gives the page time to settle before showing these
 
     return () => clearTimeout(timer);
   }, []);
