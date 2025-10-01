@@ -15,9 +15,13 @@ const Home: NextPage = () => {
   const [showHawkHacksBlurb, setShowHawkHacksBlurb] = useState(false);
   const [showQASABlurb, setShowQASABlurb] = useState(false);
   const [showQBiTBlurb, setShowQBiTBlurb] = useState(false);
+  const [showQMINDBlurb, setShowQMINDBlurb] = useState(false);
+  const [showVexBlurb, setShowVexBlurb] = useState(false);
   const [fading, setFading] = useState(" opacity-0 ease-in ");
+  const [nameTyping, setNameTyping] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
   
-  // Individual visibility states for waterfall effect
+  // These control the smooth reveal animation as you scroll down
   const [nameVisible, setNameVisible] = useState(false);
   const [subtitleVisible, setSubtitleVisible] = useState(false);
   const [desc1Visible, setDesc1Visible] = useState(false);
@@ -33,7 +37,10 @@ const Home: NextPage = () => {
   useEffect(() => {
     setFading(" opacity-100 ease-in ");
     
-    // Waterfall effect timing - top to bottom flow
+    // Make the cursor blink like a real terminal
+    const blinkInterval = setInterval(() => setShowCursor(prev => !prev), 600);
+    
+    // Stagger the animations so everything appears in a nice flow
     const timer1 = setTimeout(() => setNameVisible(true), 300);
     const timer2 = setTimeout(() => setSubtitleVisible(true), 1000);
     const timer3 = setTimeout(() => setDesc1Visible(true), 1200);
@@ -45,6 +52,7 @@ const Home: NextPage = () => {
     const timer10 = setTimeout(() => setProjectsVisible(true), 3200);
     
     return () => {
+      clearInterval(blinkInterval);
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
@@ -54,6 +62,63 @@ const Home: NextPage = () => {
       clearTimeout(timer8);
       clearTimeout(timer9);
       clearTimeout(timer10);
+    };
+  }, []);
+
+  // Handle the typewriter effect for my name
+  useEffect(() => {
+    const names = ["Kai Kim", "킴진뉴"];
+    let currentIndex = 0;
+    let isDeleting = false;
+    let currentNameIndex = 0;
+    let timeoutId: NodeJS.Timeout;
+
+    const typeName = () => {
+      const currentName = names[currentNameIndex];
+      const isKorean = currentNameIndex === 1; // Korean name needs different timing
+      
+      if (!isDeleting && currentIndex < currentName.length) {
+        // Add one character at a time
+        setNameTyping(currentName.slice(0, currentIndex + 1));
+        currentIndex++;
+        
+        // Korean characters need a bit more time to read
+        const baseTypingSpeed = isKorean ? 180 : 120; // Smoother base speeds
+        const randomVariation = Math.random() * 40; // Add natural variation
+        const typingSpeed = baseTypingSpeed + randomVariation;
+        timeoutId = setTimeout(typeName, typingSpeed);
+      } else if (isDeleting && currentIndex > 0) {
+        // Remove one character at a time
+        setNameTyping(currentName.slice(0, currentIndex - 1));
+        currentIndex--;
+        
+        // Deleting is usually faster than typing
+        const baseDeleteSpeed = isKorean ? 80 : 60; // Smoother delete speeds
+        const randomVariation = Math.random() * 30; // Add natural variation
+        const deleteSpeed = baseDeleteSpeed + randomVariation;
+        timeoutId = setTimeout(typeName, deleteSpeed);
+      } else if (!isDeleting && currentIndex === currentName.length) {
+        // Give people time to actually read the name
+        const waitTime = isKorean ? 3500 : 8000; // English name stays up longer
+        timeoutId = setTimeout(() => {
+          isDeleting = true;
+          typeName();
+        }, waitTime);
+      } else if (isDeleting && currentIndex === 0) {
+        // Move to the next name after a brief pause
+        isDeleting = false;
+        currentNameIndex = (currentNameIndex + 1) % names.length;
+        timeoutId = setTimeout(typeName, 1000); // Quick pause before switching
+      }
+    };
+
+    // Wait a moment before starting the typewriter effect
+    timeoutId = setTimeout(typeName, 1000);
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
   }, []);
 
@@ -111,7 +176,8 @@ const Home: NextPage = () => {
                     (nameVisible ? " opacity-100 " : " opacity-0 ")
                   }
                 >
-                  Kai Kim
+                  {nameTyping}
+                  <span className={`inline-block w-0.5 h-12 bg-blue-600 dark:bg-blue-400 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`}></span>
                 </h1>
               <h2
                 className={
@@ -137,11 +203,11 @@ const Home: NextPage = () => {
                 Hello! I&apos;m a developer focused on creating engaging user experiences and building user-friendly interfaces.
               </p>
               
-              {/* Social Media Links */}
+              {/* My social links - hover for some fun animations */}
               <div className={"transition-opacity duration-800 " + (desc2Visible ? " opacity-100 " : " opacity-0 ")}>
                 <div className="relative">
                   <div className="relative inline-flex items-center space-x-4">
-                      {/* GitHub */}
+                      {/* GitHub link */}
                       <a
                         className="group/link relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-3 hover:bg-white/60 dark:hover:bg-gray-800/60 hover:shadow-lg focus:outline-none focus:ring-0"
                         href="https://github.com/kaificial"
@@ -158,7 +224,7 @@ const Home: NextPage = () => {
                         </span>
                       </a>
                       
-                      {/* LinkedIn */}
+                      {/* LinkedIn link */}
                       <a
                         className="group/link relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:-rotate-3 hover:bg-white/60 dark:hover:bg-gray-800/60 hover:shadow-lg focus:outline-none focus:ring-0"
                         href="https://www.linkedin.com/in/newjeans/"
@@ -175,7 +241,7 @@ const Home: NextPage = () => {
                         </span>
                       </a>
                       
-                      {/* Resume */}
+                      {/* Resume link */}
                       <a
                         className="group/link relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-6 hover:bg-white/60 dark:hover:bg-gray-800/60 hover:shadow-lg focus:outline-none focus:ring-0"
                         href="#"
@@ -190,7 +256,7 @@ const Home: NextPage = () => {
                         </span>
                       </a>
                       
-                      {/* Email */}
+                      {/* Email link */}
                       <a
                         className="group/link relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:-rotate-6 hover:bg-white/60 dark:hover:bg-gray-800/60 hover:shadow-lg focus:outline-none focus:ring-0"
                         href="mailto:kaifieldkim@gmail.com"
@@ -225,23 +291,94 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {/* Experience Section */}
-        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 hidden " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
+        {/* Where I've worked and what I've done */}
+        <div className={"w-full max-w-2xl mt-12 transition-opacity duration-800 " + (experienceVisible ? " opacity-100 " : " opacity-0 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
               Experience
             </h2>
           </div>
           <div className="flex flex-col gap-y-4">
-            {/* QBiT Experience */}
+            {/* My AI/ML work at QMIND */}
             <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
-                <div className="w-14 h-14 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <Image
+                    src="/pictures/QMIND.jpg"
+                    alt="QMIND Logo"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
+                    <div className="flex flex-col">
+                      <h3 className="text-gray-900 dark:text-white font-semibold text-base">
+                        QMIND
+                      </h3>
+                      <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                        AI/ML Team Member
+                      </span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      Oct. 2025 - Present
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <button
+                      onClick={() => setShowQMINDBlurb(!showQMINDBlurb)}
+                      className="text-xs px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1 group"
+                    >
+                      <span>{showQMINDBlurb ? 'Show less' : 'Read more'}</span>
+                      <svg 
+                        className={`w-3 h-3 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showQMINDBlurb ? 'rotate-180' : 'rotate-0'}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  {/* Click to read more about this role */}
+                  <div className={`transition-all duration-300 ease-in-out ${
+                    showQMINDBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="mt-3">
+                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                        Working on machine learning and artificial intelligence projects
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Python
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Machine Learning
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Neural Networks
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          TensorFlow
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* My software engineering work at QBiT */}
+            <div className="transition-all duration-700 ease-out transform">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
                     src="/pictures/QBiT-Logo.png"
                     alt="QBiT Logo"
-                    width={56}
-                    height={56}
+                    width={40}
+                    height={40}
                     className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert"
                   />
                 </div>
@@ -252,7 +389,7 @@ const Home: NextPage = () => {
                         QBiT (Queen&apos;s Biomedical Innovation Team)
                       </h3>
                       <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-                        Software Team Member
+                        Software Engineer
                       </span>
                     </div>
                     <span className="text-gray-500 dark:text-gray-400 text-sm">
@@ -276,13 +413,13 @@ const Home: NextPage = () => {
                     </button>
                   </div>
                   
-                  {/* Expandable Blurb */}
+                  {/* Click to read more about this role */}
                   <div className={`transition-all duration-300 ease-in-out ${
                     showQBiTBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <div className="mt-3">
                       <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                        Software Engineer
+                        Building Iodetect
                       </p>
                       <div className="flex flex-wrap gap-2">
                         <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
@@ -295,11 +432,79 @@ const Home: NextPage = () => {
               </div>
             </div>
             
-            {/* Conditional spacing when QBiT experience is expanded */}
-            <div className={`${showQBiTBlurb ? 'h-4' : 'h-0'} transition-all duration-300`}></div>
+            {/* My robotics experience with Queens Vex */}
+            <div className="transition-all duration-700 ease-out transform">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <Image
+                    src="/pictures/QVEX1.png"
+                    alt="Queens Vex Robotics Logo"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
+                    <div className="flex flex-col">
+                      <h3 className="text-gray-900 dark:text-white font-semibold text-base">
+                        Queen&apos;s Vex Robotics Team
+                      </h3>
+                      <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                        Software Team Member
+                      </span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      Sept. 2025 - Present
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <button
+                      onClick={() => setShowVexBlurb(!showVexBlurb)}
+                      className="text-xs px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1 group"
+                    >
+                      <span>{showVexBlurb ? 'Show less' : 'Read more'}</span>
+                      <svg 
+                        className={`w-3 h-3 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showVexBlurb ? 'rotate-180' : 'rotate-0'}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  {/* Click to read more about this role */}
+                  <div className={`transition-all duration-300 ease-in-out ${
+                    showVexBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="mt-3">
+                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                        Participating in competitive robotics competitions, designing and building autonomous robots for VEX competitions while collaborating with team members on engineering solutions
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Robotics
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Engineering
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Teamwork
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Problem Solving
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             
-            {/* HawkHacks Experience */}
-            <div className="transition-all duration-700 ease-out transform hidden">
+            {/* My hackathon organizing with HawkHacks */}
+            <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
@@ -341,13 +546,13 @@ const Home: NextPage = () => {
                     </button>
                   </div>
                   
-                  {/* Expandable Blurb */}
+                  {/* Click to read more about this role */}
                   <div className={`transition-all duration-300 ease-in-out ${
                     showHawkHacksBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <div className="mt-3">
                       <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                        Coordinated logistics and event planning for HawkHacks 2025
+                        Coordinated logistics and event planning for HawkHacks 2025, managing venue arrangements, participant communications, and ensuring smooth execution of the hackathon
                       </p>
                       <div className="flex flex-wrap gap-2">
                         <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
@@ -366,11 +571,9 @@ const Home: NextPage = () => {
               </div>
             </div>
             
-            {/* Conditional spacing when HawkHacks experience is expanded */}
-            <div className={`${showHawkHacksBlurb ? 'h-4' : 'h-0'} transition-all duration-300`}></div>
             
-            {/* Ignition Hacks Experience */}
-            <div className="transition-all duration-700 ease-out transform hidden">
+            {/* My hackathon organizing with Ignition Hacks */}
+            <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
@@ -388,7 +591,7 @@ const Home: NextPage = () => {
                         Ignition Hacks
                       </h3>
                       <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-                        UX/UI Designer
+                        Product Designer
                       </span>
                     </div>
                     <span className="text-gray-500 dark:text-gray-400 text-sm">
@@ -412,13 +615,13 @@ const Home: NextPage = () => {
                     </button>
                   </div>
                   
-                  {/* Expandable Blurb */}
+                  {/* Click to read more about this role */}
                   <div className={`transition-all duration-300 ease-in-out ${
                     showIgnitionBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <div className="mt-3">
                       <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                        Designed user interfaces and experiences for Ignition Hacks website, merchandise, etc. for Ignition Hacks 2025
+                        Designed user interfaces and experiences for Ignition Hacks website, merchandise, and promotional materials, creating cohesive visual identity and user experience for Ignition Hacks 2025
                       </p>
                       <div className="flex flex-wrap gap-2">
                         <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
@@ -437,8 +640,8 @@ const Home: NextPage = () => {
               </div>
             </div>
             
-            {/* QASA Experience */}
-            <div className="transition-all duration-700 ease-out transform hidden">
+            {/* My work with the Queen's Asian Student Association */}
+            <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
@@ -480,13 +683,13 @@ const Home: NextPage = () => {
                     </button>
                   </div>
                   
-                  {/* Expandable Blurb */}
+                  {/* Click to read more about this role */}
                   <div className={`transition-all duration-300 ease-in-out ${
                     showQASABlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <div className="mt-3">
                       <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                        Designed graphics and visual content for QASA events, social media, and promotional materials
+                        Designed graphics and visual content for QASA events, social media, and promotional materials, creating engaging visual assets that enhanced community engagement and event branding
                       </p>
                       <div className="flex flex-wrap gap-2">
                         <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
@@ -510,7 +713,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {/* Education Section */}
+        {/* My academic background */}
         <div className={"w-full max-w-2xl mt-16 transition-opacity duration-800 " + (educationVisible ? " opacity-100 " : " opacity-0 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
@@ -546,7 +749,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {/* Skills Section */}
+        {/* Technologies I work with */}
         <div className={"w-full max-w-2xl mt-16 transition-opacity duration-800 " + (skillsVisible ? " opacity-100 " : " opacity-0 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
@@ -554,74 +757,77 @@ const Home: NextPage = () => {
             </h2>
           </div>
           <div className="flex flex-col gap-y-6">
-            {/* Languages */}
+            {/* Programming languages I know */}
             <div className="transition-all duration-700 ease-out transform">
               <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Languages</h3>
                               <div className="flex flex-wrap gap-2">
-                                                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                                                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     JavaScript
                   </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     TypeScript
                   </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     HTML/CSS
                   </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     Python
                   </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     Java
+                  </span>
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
+                    Arduino
                   </span>
               </div>
             </div>
 
-            {/* Frontend */}
+            {/* Frontend technologies */}
             <div className="transition-all duration-700 ease-out transform">
               <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Frontend</h3>
               <div className="flex flex-wrap gap-2">
-                                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     React
                   </span>
-                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     Next.js
                   </span>
-                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     Tailwind CSS
                   </span>
               </div>
             </div>
 
-            {/* Backend */}
+            {/* Backend technologies */}
             <div className="transition-all duration-700 ease-out transform">
               <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Backend</h3>
               <div className="flex flex-wrap gap-2">
-                                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     Node.js
                   </span>
-                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     Express.js
                   </span>
-                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                  <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                     MongoDB
                   </span>
               </div>
             </div>
 
-            {/* Tools & Others */}
+            {/* Other tools and technologies */}
             <div className="transition-all duration-700 ease-out transform">
               <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Tools & Others</h3>
               <div className="flex flex-wrap gap-2">
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                   Git
                 </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                   REST APIs
                 </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                   VS Code
                 </span>
-                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm">
+                <span className="skill-tag hover-bg-animation px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium cursor-pointer border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-lg hover:scale-110 hover:-rotate-1 transition-all duration-300 ease-out active:scale-95">
                   Canva
                 </span>
               </div>
@@ -629,7 +835,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {/* Featured Projects Section */}
+        {/* Some of my favorite projects */}
         <div className={"w-full max-w-2xl mt-20 transition-opacity duration-800 " + (projectsVisible ? " opacity-100 " : " opacity-0 ")}>
           <div className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">
@@ -637,30 +843,30 @@ const Home: NextPage = () => {
             </h2>
           </div>
           <div className="flex flex-col gap-y-6">
-            {/* Project 1 - Koda */}
+            {/* Koda - my student finance app */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02]">
-                {/* Hover overlay effect */}
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+                {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
-                {/* Project Image */}
+                {/* Project screenshot */}
                 <div className="relative w-full mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-                  {/* Windows-style header */}
+                  {/* Browser window mockup */}
                   <div className="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-gray-900 border-b border-gray-700 dark:border-gray-600">
-                    {/* URL */}
+                    {/* Website URL */}
                     <div className="flex-1">
                       <div className="flex items-center bg-gray-700 dark:bg-gray-800 rounded px-3 py-1">
-                        {/* Lock icon */}
+                        {/* HTTPS indicator */}
                         <svg className="w-3 h-3 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                         </svg>
-                        {/* URL */}
+                        {/* The actual URL */}
                         <span className="text-xs text-gray-300 font-medium truncate">
                           koda-demo.vercel.app
                         </span>
                       </div>
                     </div>
                     
-                    {/* Right side - Windows control buttons */}
+                    {/* Browser control buttons */}
                     <div className="flex items-center space-x-1 ml-2">
                       <div className="w-3 h-3 bg-gray-600 hover:bg-gray-500 transition-colors flex items-center justify-center">
                         <svg className="w-2 h-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -680,7 +886,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                   
-                  {/* Screenshot area */}
+                  {/* Where the project screenshot goes */}
                   <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                     <Image
                       src="/pictures/image (14).png"
@@ -691,7 +897,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
+                {/* Project details and description */}
                 <div className="flex flex-col h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
@@ -704,7 +910,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
 
-                  {/* Technologies */}
+                  {/* Tech stack used */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-110 hover:rotate-1 hover:shadow-lg transition-all duration-700 ease-out active:scale-95 cursor-pointer">
                       Next.js
@@ -755,30 +961,30 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            {/* Project 2 - RateMyEats */}
+            {/* RateMyEats - university dining hall reviews */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02]">
-                {/* Hover overlay effect */}
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+                {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
-                {/* Project Image */}
+                {/* Project screenshot */}
                 <div className="relative w-full mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-                  {/* Windows-style header */}
+                  {/* Browser window mockup */}
                   <div className="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-gray-900 border-b border-gray-700 dark:border-gray-600">
-                    {/* URL */}
+                    {/* Website URL */}
                     <div className="flex-1">
                       <div className="flex items-center bg-gray-700 dark:bg-gray-800 rounded px-3 py-1">
-                        {/* Lock icon */}
+                        {/* HTTPS indicator */}
                         <svg className="w-3 h-3 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                         </svg>
-                        {/* URL */}
+                        {/* The actual URL */}
                         <span className="text-xs text-gray-300 font-medium truncate">
                           ratemyeats.com
                         </span>
                       </div>
                     </div>
                     
-                    {/* Right side - Windows control buttons */}
+                    {/* Browser control buttons */}
                     <div className="flex items-center space-x-1 ml-2">
                       <div className="w-3 h-3 bg-gray-600 hover:bg-gray-500 transition-colors flex items-center justify-center">
                         <svg className="w-2 h-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -798,7 +1004,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                   
-                  {/* Screenshot area */}
+                  {/* Where the project screenshot goes */}
                   <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
@@ -818,7 +1024,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
+                {/* Project details and description */}
                 <div className="flex flex-col h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
@@ -831,7 +1037,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
 
-                  {/* Technologies */}
+                  {/* Tech stack used */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-110 hover:rotate-1 hover:shadow-lg transition-all duration-700 ease-out active:scale-95 cursor-pointer">
                       React
@@ -882,30 +1088,30 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            {/* Project 3 - Rooke */}
+            {/* Rooke - my chess app with AI */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02]">
-                {/* Hover overlay effect */}
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+                {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
-                {/* Project Image */}
+                {/* Project screenshot */}
                 <div className="relative w-full mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-                  {/* Windows-style header */}
+                  {/* Browser window mockup */}
                   <div className="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-gray-900 border-b border-gray-700 dark:border-gray-600">
-                    {/* URL */}
+                    {/* Website URL */}
                     <div className="flex-1">
                       <div className="flex items-center bg-gray-700 dark:bg-gray-800 rounded px-3 py-1">
-                        {/* Lock icon */}
+                        {/* HTTPS indicator */}
                         <svg className="w-3 h-3 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                         </svg>
-                        {/* URL */}
+                        {/* The actual URL */}
                         <span className="text-xs text-gray-300 font-medium truncate">
                           rooke-chess.vercel.app
                         </span>
                       </div>
                     </div>
                     
-                    {/* Right side - Windows control buttons */}
+                    {/* Browser control buttons */}
                     <div className="flex items-center space-x-1 ml-2">
                       <div className="w-3 h-3 bg-gray-600 hover:bg-gray-500 transition-colors flex items-center justify-center">
                         <svg className="w-2 h-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -925,7 +1131,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                   
-                  {/* Screenshot area */}
+                  {/* Where the project screenshot goes */}
                   <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                     <Image
                       src="/pictures/Rooke.png"
@@ -936,7 +1142,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
+                {/* Project details and description */}
                 <div className="flex flex-col h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
@@ -949,7 +1155,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
 
-                  {/* Technologies */}
+                  {/* Tech stack used */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-110 hover:rotate-1 hover:shadow-lg transition-all duration-700 ease-out active:scale-95 cursor-pointer">
                       React 18
@@ -1009,30 +1215,30 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            {/* Project 4 - Personal Portfolio */}
+            {/* This portfolio website - what you're looking at right now */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02]">
-                {/* Hover overlay effect */}
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+                {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
-                {/* Project Image */}
+                {/* Project screenshot */}
                 <div className="relative w-full mb-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-                  {/* Windows-style header */}
+                  {/* Browser window mockup */}
                   <div className="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-gray-900 border-b border-gray-700 dark:border-gray-600">
-                    {/* URL */}
+                    {/* Website URL */}
                     <div className="flex-1">
                       <div className="flex items-center bg-gray-700 dark:bg-gray-800 rounded px-3 py-1">
-                        {/* Lock icon */}
+                        {/* HTTPS indicator */}
                         <svg className="w-3 h-3 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                         </svg>
-                        {/* URL */}
+                        {/* The actual URL */}
                         <span className="text-xs text-gray-300 font-medium truncate">
                           kaificial.vercel.app
                         </span>
                       </div>
                     </div>
                     
-                    {/* Right side - Windows control buttons */}
+                    {/* Browser control buttons */}
                     <div className="flex items-center space-x-1 ml-2">
                       <div className="w-3 h-3 bg-gray-600 hover:bg-gray-500 transition-colors flex items-center justify-center">
                         <svg className="w-2 h-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -1052,7 +1258,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                   
-                  {/* Screenshot area */}
+                  {/* Where the project screenshot goes */}
                   <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                     <Image
                       src="/pictures/portfolio_project.png"
@@ -1063,7 +1269,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
+                {/* Project details and description */}
                 <div className="flex flex-col h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
@@ -1076,7 +1282,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
 
-                  {/* Technologies */}
+                  {/* Tech stack used */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-110 hover:rotate-1 hover:shadow-lg transition-all duration-700 ease-out active:scale-95 cursor-pointer">
                       Next.js
@@ -1175,6 +1381,38 @@ const Home: NextPage = () => {
           50% {
             filter: drop-shadow(0 0 8px rgba(147, 197, 253, 0.6)) drop-shadow(0 0 16px rgba(147, 197, 253, 0.3));
           }
+        }
+        
+        /* Enhanced skill tag animations */
+        .skill-tag {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .skill-tag::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+        
+        .skill-tag:hover::before {
+          left: 100%;
+        }
+        
+        
+        /* Typewriter cursor animation */
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+        
+        .typing-cursor {
+          animation: blink 1.2s ease-in-out infinite;
         }
       `}</style>
     </div>
