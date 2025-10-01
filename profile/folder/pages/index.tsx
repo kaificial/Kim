@@ -845,7 +845,7 @@ const Home: NextPage = () => {
           <div className="flex flex-col gap-y-6">
             {/* Koda - my student finance app */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2">
                 {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
                 {/* Project screenshot */}
@@ -963,7 +963,7 @@ const Home: NextPage = () => {
 
             {/* RateMyEats - university dining hall reviews */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2">
                 {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
                 {/* Project screenshot */}
@@ -1090,7 +1090,7 @@ const Home: NextPage = () => {
 
             {/* Rooke - my chess app with AI */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2">
                 {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
                 {/* Project screenshot */}
@@ -1217,7 +1217,7 @@ const Home: NextPage = () => {
 
             {/* This portfolio website - what you're looking at right now */}
             <div className="transition-all duration-700 ease-out transform">
-              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:rotate-1 hover:shadow-2xl">
+              <div className="group card-elevated project-card hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-2xl p-8 transition-all duration-700 ease-out border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 h-full relative overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2">
                 {/* Subtle hover effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-gray-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
                 {/* Project screenshot */}
