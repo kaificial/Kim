@@ -432,8 +432,8 @@ const Home: NextPage = () => {
               </div>
             </div>
             
-            {/* My robotics experience with Queens Vex */}
-            <div className="transition-all duration-700 ease-out transform">
+            {/* My robotics experience with Queens Vex - HIDDEN */}
+            {/* <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <Image
@@ -475,7 +475,6 @@ const Home: NextPage = () => {
                     </button>
                   </div>
                   
-                  {/* Click to read more about this role */}
                   <div className={`transition-all duration-300 ease-in-out ${
                     showVexBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
@@ -501,7 +500,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             
             {/* My hackathon organizing with HawkHacks */}
             <div className="transition-all duration-700 ease-out transform">
