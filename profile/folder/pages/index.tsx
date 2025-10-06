@@ -16,6 +16,7 @@ const Home: NextPage = () => {
   const [showQASABlurb, setShowQASABlurb] = useState(false);
   const [showQBiTBlurb, setShowQBiTBlurb] = useState(false);
   const [showQMINDBlurb, setShowQMINDBlurb] = useState(false);
+  const [showQACBlurb, setShowQACBlurb] = useState(false);
   const [showVexBlurb, setShowVexBlurb] = useState(false);
   const [fading, setFading] = useState(" opacity-0 ease-in ");
   const [nameTyping, setNameTyping] = useState("");
@@ -362,6 +363,77 @@ const Home: NextPage = () => {
                         </span>
                         <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
                           TensorFlow
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* My web development work at QAC */}
+            <div className="transition-all duration-700 ease-out transform">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <Image
+                    src="/pictures/QAC1.png"
+                    alt="QAC Logo"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
+                    <div className="flex flex-col">
+                      <h3 className="text-gray-900 dark:text-white font-semibold text-base">
+                        QAC (Queen&apos;s Actuarial-Science Club)
+                      </h3>
+                      <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                        Web Developer
+                      </span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      Oct. 2025 - Present
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <button
+                      onClick={() => setShowQACBlurb(!showQACBlurb)}
+                      className="text-xs px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1 group"
+                    >
+                      <span>{showQACBlurb ? 'Show less' : 'Read more'}</span>
+                      <svg 
+                        className={`w-3 h-3 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showQACBlurb ? 'rotate-180' : 'rotate-0'}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  {/* Click to read more about this role */}
+                  <div className={`transition-all duration-300 ease-in-out ${
+                    showQACBlurb ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="mt-3">
+                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                        Developing the QAC website
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Web Development
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          Frontend
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          React
+                        </span>
+                        <span className="skill-tag px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700 shadow-sm hover:scale-105 transition-all duration-300 ease-out">
+                          JavaScript
                         </span>
                       </div>
                     </div>
