@@ -6,10 +6,10 @@ export default function _404() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>tr1e_</title>
+        <title>fic</title>
       </Head>
 
-      <div> LOLOLOL</div>
+      <div> lif</div>
     </div>
   );
 }

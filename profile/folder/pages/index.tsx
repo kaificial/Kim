@@ -201,7 +201,7 @@ const Home: NextPage = () => {
                   (desc1Visible ? " opacity-100 " : " opacity-0 ")
                 }
               >
-                Hello! I&apos;m a developer focused on creating engaging user experiences and building user-friendly interfaces.
+                Hello! I'm a developer focused on creating engaging user experiences and building user-friendly interfaces.
               </p>
               
               {/* My social links - hover for some fun animations */}
@@ -300,7 +300,7 @@ const Home: NextPage = () => {
             </h2>
           </div>
           <div className="flex flex-col gap-y-4">
-            {/* My AI/ML work at QMIND */}
+            {/* QMIND */}
             <div className="transition-all duration-700 ease-out transform">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 overflow-hidden">
@@ -1220,8 +1220,8 @@ const Home: NextPage = () => {
                       <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 group-hover:text-blue-700 dark:group-hover:text-gray-300 transition-colors mb-2">
                         Rooke
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                        A web-based chess app with AI opponents and sandbox mode. Remake of a high school project with modern technologies.
+                      <p className="text-sm text-gray-500 dark:text-gray-100 mb-3">
+                        Made for new chess players looking to improve their skills.
                       </p>
                     </div>
                   </div>

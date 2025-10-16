@@ -148,10 +148,6 @@ const Projects: NextPage = () => {
         <meta property="og:site_name" content={heading} />
         <meta property="og:description" content={subheading} />
         <meta property="og:title" content={heading} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@kaikim" />
-        <meta name="twitter:title" content={heading} />
-        <meta name="twitter:description" content={subheading} />
       </Head>
 
       <div className="flex flex-col justify-center items-start max-w-2xl border-gray-200 dark:border-gray-700 mx-auto pb-16 relative z-10">
@@ -179,7 +175,7 @@ const Projects: NextPage = () => {
               fading
             }
           >
-            A collection of projects that showcase my skills in web development, from full-stack applications to interactive demos.
+            Projects in web development, including full-stack applications and interactive demos.
           </p>
         </div>
 
